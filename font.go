@@ -4,7 +4,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/theme"
 	"image/color"
-	"strings"
+	"tool/resource/fonts"
 )
 
 type MyTheme struct {
@@ -46,7 +46,7 @@ func (t *MyTheme) SetFonts(regularFontPath string, monoFontPath string) {
 	t.boldItalic = theme.TextBoldItalicFont()
 	t.monospace = theme.TextMonospaceFont()
 
-	if regularFontPath != "" {
+	if regularFontPath == "bindata" {
 		t.regular = loadCustomFont(regularFontPath, "Regular", t.regular)
 		t.bold = loadCustomFont(regularFontPath, "Bold", t.bold)
 		t.italic = loadCustomFont(regularFontPath, "Italic", t.italic)
@@ -60,13 +60,7 @@ func (t *MyTheme) SetFonts(regularFontPath string, monoFontPath string) {
 }
 
 func loadCustomFont(env, variant string, fallback fyne.Resource) fyne.Resource {
-	variantPath := strings.Replace(env, "Regular", variant, -1)
+	b, _ := fonts.Asset(fonts.AssetNames()[0])
 
-	res, err := fyne.LoadResourceFromPath(variantPath)
-	if err != nil {
-		fyne.LogError("Error loading specified font", err)
-		return fallback
-	}
-
-	return res
+	return fyne.NewStaticResource("font", b)
 }

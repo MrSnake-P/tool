@@ -12,8 +12,8 @@ type Tutorial struct {
 var (
 	// Tutorials defines the metadata for each tutorial
 	Tutorials = map[string]Tutorial{
-		"input": {"小工具",
-			"请选择文件",
+		"input": {"切分文件",
+			"",
 			makeInputTab,
 			true,
 		},

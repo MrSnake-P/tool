@@ -1,3 +1,5 @@
+//go:generate go-bindata -pkg main -o fonts/bindata.go fonts/
+
 package main
 
 import (
@@ -13,26 +15,24 @@ const preferenceCurrentTutorial = "currentTutorial"
 var topWindow fyne.Window
 
 func main() {
+
 	a := app.New()
 	w := a.NewWindow("tool")
 	content := container.NewMax()
 	title := widget.NewLabel("welcome")
-	intro := widget.NewLabel("a tool")
-	intro.Wrapping = fyne.TextWrapWord
 	setTutorial := func(t tool.Tutorial) {
 		title.SetText(t.Title)
-		intro.SetText(t.Intro)
 		content.Objects = []fyne.CanvasObject{t.View(w)}
 		content.Refresh()
 	}
 	tutorial := container.NewBorder(
-		container.NewVBox(title, widget.NewSeparator(), intro), nil, nil, nil, content)
+		container.NewVBox(title, widget.NewSeparator()), nil, nil, nil, content)
 	split := container.NewHSplit(makeNav(setTutorial, true), tutorial)
 	split.Offset = 0.2
 	w.SetContent(split)
 	w.Resize(fyne.NewSize(580, 480))
 	t := &tool.MyTheme{}
-	t.SetFonts("Deng.ttf", "")
+	t.SetFonts("bindata", "")
 	a.Settings().SetTheme(t)
 	w.ShowAndRun()
 }
