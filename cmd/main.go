@@ -1,5 +1,3 @@
-//go:generate go-bindata -pkg main -o fonts/bindata.go fonts/
-
 package main
 
 import (
@@ -15,7 +13,6 @@ const preferenceCurrentTutorial = "currentTutorial"
 var topWindow fyne.Window
 
 func main() {
-
 	a := app.New()
 	w := a.NewWindow("tool")
 	content := container.NewMax()
